@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente {
+  id       Int       @id @default(autoincrement())
+  nome     String
+  contato  String
+  veiculos Veiculo[] 
+}
+
+model Veiculo {
+  id        Int             @id @default(autoincrement())
+  placa     String          @unique
+  marca     String
+  modelo    String
+  clienteId Int             // Chave Estrangeira
+  cliente   Cliente         @relation(fields: [clienteId], references: [id])
+  ordens    OrdemServico[]
+}
+
+model OrdemServico {
+  id                Int      @id @default(autoincrement())
+  descricaoProblema String
+  statusReparacao   String   @default("Pendente") // Pode ser: Pendente, Em Andamento, Concluído
+  dataEntrada       DateTime @default(now())
+  veiculoId         Int      
+  veiculo           Veiculo  @relation(fields: [veiculoId], references: [id])
+}
