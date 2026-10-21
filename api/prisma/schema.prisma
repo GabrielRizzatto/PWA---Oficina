@@ -19,16 +19,16 @@ model Veiculo {
   placa     String          @unique
   marca     String
   modelo    String
-  clienteId Int             // Chave Estrangeira
-  cliente   Cliente         @relation(fields: [clienteId], references: [id])
+  clienteId Int             
+  cliente   Cliente         @relation(fields: [clienteId], references: [id], onDelete: Cascade)
   ordens    OrdemServico[]
 }
 
 model OrdemServico {
   id                Int      @id @default(autoincrement())
   descricaoProblema String
-  statusReparacao   String   @default("Pendente") // Pode ser: Pendente, Em Andamento, Concluído
+  statusReparacao   String   @default("Pendente")
   dataEntrada       DateTime @default(now())
   veiculoId         Int      
-  veiculo           Veiculo  @relation(fields: [veiculoId], references: [id])
+  veiculo           Veiculo  @relation(fields: [veiculoId], references: [id], onDelete: Cascade)
 }

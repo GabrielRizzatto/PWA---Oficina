@@ -29,9 +29,9 @@ const addOrdemServico = async (request, response) => {
 
 const updateOrdemServico = async (request, response) => {
   const { id } = request.params;
-  const { statusReparacao } = request.body; // Ex: "Concluído"
+  const { descricaoProblema, statusReparacao, veiculoId } = request.body;
 
-  await updateOrdemServicoDB(id, statusReparacao)
+  await updateOrdemServicoDB(id, descricaoProblema, statusReparacao, veiculoId)
     .then((data) => response.status(200).json(data))
     .catch((erro) =>
       response.status(400).json({ status: "error", message: erro }),

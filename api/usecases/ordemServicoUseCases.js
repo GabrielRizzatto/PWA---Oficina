@@ -54,11 +54,25 @@ const addOrdemServicoDB = async (descricaoProblema, veiculoId) => {
   }
 };
 
-const updateOrdemServicoDB = async (id, statusReparacao) => {
+const updateOrdemServicoDB = async (
+  id,
+  descricaoProblema,
+  statusReparacao,
+  veiculoId,
+) => {
   try {
     const ordemAtualizada = await prisma.ordemServico.update({
       where: { id: parseInt(id) },
-      data: { statusReparacao },
+      data: {
+        descricaoProblema,
+        statusReparacao,
+        veiculoId: parseInt(veiculoId),
+      },
+      include: {
+        veiculo: {
+          include: { cliente: true },
+        },
+      },
     });
     return ordemAtualizada;
   } catch (error) {

@@ -1,4 +1,3 @@
-// routes/rotas.js
 const { Router } = require("express");
 const rotasClientes = require("./rotasCliente");
 const rotasVeiculos = require("./rotasVeiculo");
